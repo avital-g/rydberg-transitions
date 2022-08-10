@@ -36,7 +36,7 @@ def read_Shanghai_text(file_name, scale='wl'):
             value = calculate_rydberg_wl_shanghai(float(frq) * m.pow(10, 12))
             if scale == 'wl':
                 value = wl_frq_unit_chnage(value)
-            row = [float(n), 2*value]
+            row = [float(n), value]
             data = np.append(data, np.array([row]), axis=0)
 
     return (data[data[:, 0].argsort()]);
@@ -66,7 +66,7 @@ def read_Germany_text(file_name, scale='wl'):
             if scale == 'wl':
                 value = wl_frq_unit_chnage(value)
 
-            row = [float(n),2*value]
+            row = [float(n),value]
             data = np.append(data, np.array([row]), axis=0)
     return (data)
 
@@ -81,6 +81,7 @@ def find_transition_of_n(data, n: int):
 def single_plot(data, color, label, shape = "."):
     color_and_shape = color+shape
     starting_point= find_transition_of_n(data,40)
+    #plt.plot(data[starting_point:, 0], data[starting_point:, 1], color_and_shape, label=label)
     plt.plot(data[starting_point:, 0], data[starting_point:, 1], color_and_shape, label=label)
 
 
@@ -132,7 +133,6 @@ def find_near_transitions(data_file_name, n):
             data_mat[:,1]=data_mat[:,1]-this_frq
             data_label = file_name.split("_")[1]+" "+file_name.split("_")[2]
             single_plot(data_mat,colors[c], data_label)
-
             c=c+1
             print(data_label)
             print(data_mat)
@@ -159,3 +159,7 @@ def single_calculation():
 if __name__ == '__main__':
     #find_near_transitions("87\Germany_S_half_transitions.txt",56)
     plots_87('frq')
+    #P3half= (1008.6155556*10**12-TRANS_FROM_GROUND_STATE)/10**12
+    #print(P3half)
+    #D3half = 624.459
+    #print (P3half-D3half)
